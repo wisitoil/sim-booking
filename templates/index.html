@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สูตรซิ่ง Sim Racing - จองคิวออนไลน์</title>
+    <!-- นำเข้า Tailwind CSS สำหรับการจัดหน้าจออย่างรวดเร็ว -->
+    <script src="https://jsdelivr.net"></script>
+    <!-- นำเข้า Font Google - Prompt เพื่อความทันสมัย -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+            background-color: #0d0e12;
+        }
+        .neon-orange {
+            text-shadow: 0 0 10px #ff6600, 0 0 20px #ff6600;
+        }
+        .neon-border:hover {
+            box-shadow: 0 0 15px rgba(255, 102, 0, 0.4);
+            border-color: #ff6600;
+        }
+    </style>
+</head>
+<body class="text-gray-100 min-h-screen pb-12">
+
+    <!-- ส่วนหัวของร้าน (Header) -->
+    <div class="relative bg-gradient-to-b from-amber-600/20 to-transparent py-8 text-center px-4">
+        <h1 class="text-3xl font-extrabold tracking-wider text-orange-500 neon-orange uppercase">SOOT ZING</h1>
+        <p class="text-xs text-gray-400 mt-1 font-light">SIM RACING & PS5 LOUNGE @ BTS LASALLE</p>
+    </div>
+
+    <div class="max-w-md mx-auto px-4 mt-4">
+        <!-- ขั้นตอนการกรอกข้อมูลลูกค้า -->
+        <div class="bg-gray-900/60 border border-gray-800 rounded-2xl p-5 backdrop-blur-md mb-6">
+            <h2 class="text-sm font-semibold text-gray-300 mb-4 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span> 1. ข้อมูลผู้จอง
+            </h2>
+            <div class="space-y-3">
+                <div>
+                    <label class="block text-xs text-gray-400 mb-1">ชื่อผู้ติดต่อ</label>
+                    <input type="text" id="custName" placeholder="กรอกชื่อของคุณ" 
+                           class="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 transition-colors">
+                </div>
+            </div>
+        </div>
+
+        <!-- ขั้นตอนการเลือกโซนเล่นเกม -->
+        <div class="mb-6">
+            <h2 class="text-sm font-semibold text-gray-300 mb-4 flex items-center gap-2 px-1">
+                <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span> 2. เลือกโซนความมันส์
+            </h2>
+            <div class="grid grid-cols-2 gap-4">
+                <!-- การ์ดโซน Sim Racing -->
+                <div onclick="selectZone('SIM-01', 400)" id="card-SIM" 
+                     class="neon-border cursor-pointer bg-gray-900/60 border-2 border-gray-800 rounded-2xl p-4 flex flex-col justify-between h-40 transition-all">
+                    <div>
+                        <span class="text-xs font-bold text-orange-500 tracking-wide uppercase">🏎️ SIM ZONE</span>
+                        <h3 class="text-base font-bold mt-1">Sim Racing</h3>
+                        <p class="text-[10px] text-gray-400 mt-1 leading-tight">พวงมาลัย Direct Drive จอยักษ์ สมจริงที่สุด</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-lg font-bold text-white">400.-</span>
+                        <span class="text-[10px] text-gray-400">/ชม.</span>
+                    </div>
+                </div>
+
+                <!-- การ์ดโซน PS5 ปกติ -->
+                <div onclick="selectZone('PS5-01', 150)" id="card-PS5" 
+                     class="neon-border cursor-pointer bg-gray-900/60 border-2 border-gray-800 rounded-2xl p-4 flex flex-col justify-between h-40 transition-all">
+                    <div>
+                        <span class="text-xs font-bold text-blue-400 tracking-wide uppercase">🎮 PS5 ZONE</span>
+                        <h3 class="text-base font-bold mt-1">Standard</h3>
+                        <p class="text-[10px] text-gray-400 mt-1 leading-tight">โซฟานุ่ม นั่งชิล เกมฮิตเล่นกับเพื่อน</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-lg font-bold text-white">150.-</span>
+                        <span class="text-[10px] text-gray-400">/ชม.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ขั้นตอนการเลือกจำนวนชั่วโมง -->
+        <div class="bg-gray-900/60 border border-gray-800 rounded-2xl p-5 backdrop-blur-md mb-8">
+            <h2 class="text-sm font-semibold text-gray-300 mb-4 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span> 3. เลือกเวลาเล่น
+            </h2>
+            <label class="block text-xs text-gray-400 mb-2">จำนวนชั่วโมงที่ต้องการเล่น</label>
+            <div class="grid grid-cols-3 gap-3">
+                <button onclick="selectHours(1)" id="btn-h1" class="py-3 bg-gray-800 border border-gray-700 rounded-xl text-sm font-medium hover:bg-gray-700 transition-colors">1 ชั่วโมง</button>
+                <button onclick="selectHours(2)" id="btn-h2" class="py-3 bg-gray-800 border border-gray-700 rounded-xl text-sm font-medium hover:bg-gray-700 transition-colors">2 ชั่วโมง</button>
+                <button onclick="selectHours(3)" id="btn-h3" class="py-3 bg-gray-800 border border-gray-700 rounded-xl text-sm font-medium hover:bg-gray-700 transition-colors">3 ชั่วโมง</button>
+            </div>
+        </div>
+
+        <!-- แถบสรุปยอดและปุ่มจองคิว -->
+        <div class="bg-gradient-to-r from-orange-600 to-amber-500 rounded-2xl p-4 shadow-xl flex items-center justify-between">
+            <div>
+                <p class="text-[11px] text-orange-100 uppercase tracking-wider font-medium">ยอดรวมมัดจำทั้งหมด</p>
+                <p class="text-2xl font-black text-white mt-0.5" id="totalPriceDisplay">0 ฿</p>
+            </div>
+            <button onclick="submitBooking()" class="bg-white text-orange-600 font-bold px-6 py-3 rounded-xl text-sm shadow-md hover:bg-orange-50 transition-transform active:scale-95">
+                ยืนยันการจองคิว
+            </button>
+        </div>
+    </div>
+
+    <!-- โค้ด JavaScript สำหรับควบคุมหน้าจอ -->
+    <script>
+        let selectedConsole = '';
+        let selectedHoursCount = 0;
+        let pricePerHour = 0;
+
+        function selectZone(consoleId, price) {
+            selectedConsole = consoleId;
+            pricePerHour = price;
+            
+            // เปลี่ยนสีขอบการ์ดที่ถูกเลือก
+            document.getElementById('card-SIM').style.borderColor = consoleId.startsWith('SIM') ? '#ff6600' : '#1f2937';
+            document.getElementById('card-PS5').style.borderColor = consoleId.startsWith('PS5') ? '#60a5fa' : '#1f2937';
+            
+            calculateTotal();
+        }
+
+        function selectHours(hrs) {
+            selectedHoursCount = hrs;
+            
+            // ไฮไลท์ปุ่มชั่วโมงที่เลือก
+            [1, 2, 3].forEach(h => {
+                const btn = document.getElementById(`btn-h${h}`);
+                if (h === hrs) {
+                    btn.classList.add('bg-orange-500', 'text-white', 'border-orange-500');
+                    btn.classList.remove('bg-gray-800', 'text-gray-100', 'border-gray-700');
+                } else {
+                    btn.classList.remove('bg-orange-500', 'text-white', 'border-orange-500');
+                    btn.classList.add('bg-gray-800', 'text-gray-100', 'border-gray-700');
+                }
+            });
+
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            const total = pricePerHour * selectedHoursCount;
+            document.getElementById('totalPriceDisplay').innerText = `${total.toLocaleString()} ฿`;
+        }
+
+        function submitBooking() {
+            const name = document.getElementById('custName').value;
+            
+            if (!name) return alert('กรุณากรอกชื่อผู้จองด้วยครับ');
+            if (!selectedConsole) return alert('กรุณาเลือกโซนเล่นเกมด้วยครับ');
+            if (selectedHoursCount === 0) return alert('กรุณาเลือกจำนวนชั่วโมงที่ต้องการเล่นครับ');
+
+            // ส่งข้อมูลไปยังระบบหลังบ้าน (Python API)
+            const payload = {
+                line_user_id: "LINE_USER_MOCK_123", // ในอนาคตใช้ระบบ LINE LIFF ดึงค่ามาใส่จริง
+                customer_name: name,
+                console_id: selectedConsole,
+                hours: selectedHoursCount
+            };
+
+            fetch('/book', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.message) {
+                    alert(`🏎️ ${data.message}\nยอดชำระ: ${data.booking_details.total_price} บาท`);
+                } else {
+                    alert('เกิดข้อผิดพลาดในการจองคิว');
+                }
+            })
+            .catch(err => alert('ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์หลังบ้านได้'));
+        }
+    </script>
+</body>
+</html>
